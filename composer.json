@@ -1,0 +1,12 @@
+{
+    "name": "aigachu/discord-estelle",
+    "authors": [
+        {
+            "name": "Aiga Chu",
+            "email": "aigachu.sama@gmail.com"
+        }
+    ],
+    "require": {
+        "charlottedunois/yasmin": "^0.4.1"
+    }
+}
