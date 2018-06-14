@@ -6,13 +6,13 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Client;
+namespace Aigachu\Lavenza\Client\DiscordClient;
 
 /**
  * Class CarolineClient
  * @package Aigachu\Lavenza\Client
  */
-class CarolineClient extends LavenzaClient
+class CarolineDiscordClient extends LavenzaDiscordClient
 {
 
 }

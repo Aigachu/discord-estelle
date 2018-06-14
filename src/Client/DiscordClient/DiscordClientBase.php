@@ -6,13 +6,15 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Client;
+namespace Aigachu\Lavenza\Client\DiscordClient;
 
+use Aigachu\Lavenza\Client\ClientInterface;
 use CharlotteDunois\Yasmin\Client as YasminClient;
 use React\EventLoop\Factory as ReactEventLoopFactory;
 use React\EventLoop\LibEventLoop;
 use React\EventLoop\ExtEventLoop;
 use React\EventLoop\LibEvLoop;
+use WebDriver\Exception;
 
 /**
  * Class LavenzaClient
@@ -20,7 +22,7 @@ use React\EventLoop\LibEvLoop;
  *
  * @package Aigachu\Lavenza
  */
-class ClientBase extends YasminClient implements ClientInterface
+abstract class DiscordClientBase extends YasminClient implements ClientInterface
 {
     /**
      * @var String $token
@@ -31,6 +33,11 @@ class ClientBase extends YasminClient implements ClientInterface
      * @var LibEventLoop|ExtEventLoop|LibEvLoop $loop
      */
     protected $loop;
+
+    /**
+     * @var array $listeners
+     */
+    protected $listeners;
 
     /**
      * LavenzaClient constructor.
@@ -67,11 +74,15 @@ class ClientBase extends YasminClient implements ClientInterface
     /**
      * Login function
      */
-    public function clientLogin() {
-        // Runs Yasmin's default login function with the given token.
-        parent::login($this->token);
+    public function authenticate() {
+        try {
+            // Runs Yasmin's default login function with the given token.
+            parent::login($this->token);
 
-        // Run React EventLoop.
-        $this->loop->run();
+            // Run React EventLoop.
+            $this->loop->run();
+        } catch (Exception $e) {
+            throwException($e);
+        }
     }
 }

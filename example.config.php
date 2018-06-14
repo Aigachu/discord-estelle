@@ -10,15 +10,23 @@
  * === Lavenza's Configuration File ===
  */
 
-// Client Tokens
-$config['clients'] = [
-    'lavenza' => [
-        'token'   => 'sdugkbskbgjl',
-    ],
-    'caroline' => [
-        'token'   => 'sdugkbskbgjl',
-    ],
-    'justine' => [
-        'token'   => 'sdugkbskbgjl',
-    ],
+// === Discord Configuration ===
+
+// Lavenza Configuration
+$config['discord']['clients']['lavenza'] = [
+    'token' => 'bsakhfbfgjoeabsakhfbfgjoea',
 ];
+
+// Caroline Configuration
+$config['discord']['clients']['caroline'] = [
+    'token' => 'bsakhfbfgjoea',
+];
+
+// Justine Configuration
+$config['discord']['clients']['justine'] = [
+    'token' => 'bsakhfbfgjoeabsakhfbfgjoeabsakhfbfgjoea',
+];
+
+// Twitch Configuration
+$config['twitch'] = [];
+

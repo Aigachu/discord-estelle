@@ -14,5 +14,9 @@ namespace Aigachu\Lavenza\Client;
  */
 interface ClientInterface
 {
-    public function clientLogin();
+    /**
+     * Login to the service this Client is linked to.
+     * @return mixed
+     */
+    public function authenticate();
 }

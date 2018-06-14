@@ -8,7 +8,7 @@
 
 namespace Aigachu\Lavenza;
 
-use Aigachu\Lavenza\Client\LavenzaClient;
+use Aigachu\Lavenza\Client\DiscordClient\LavenzaDiscordClient;
 
 /**
  * Class Lavenza
@@ -37,7 +37,7 @@ class Lavenza
     public function __construct(array $config)
     {
         $this->clients = [
-            new LavenzaClient($config['clients']['lavenza']['token'], []),
+            new LavenzaDiscordClient($config['discord']['clients']['lavenza']['token'], []),
         ];
     }
 
@@ -48,9 +48,9 @@ class Lavenza
     public function jackIn() {
         foreach ($this->clients as $client) {
             /**
-             * @var LavenzaClient $client
+             * @var LavenzaDiscordClient $client
              */
-            $client->clientLogin();
+            $client->authenticate();
         }
     }
 }

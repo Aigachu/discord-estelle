@@ -16,8 +16,11 @@ if (file_exists(__DIR__ . '/config.php')) {
     exit();
 }
 
+// Use Main Lavenza class as core.
+use Aigachu\Lavenza\Lavenza as Core;
+
 // Instantiate Lavenza.
-$lavenza = new \Aigachu\Lavenza\Lavenza($config);
+$lavenza = new Core($config);
 
 // Jack in! Lavenza, Execute!!!
 $lavenza->jackIn();

@@ -11,7 +11,7 @@
  * https://discordapp.com/oauth2/authorize?&client_id=456567072034521098&scope=bot&permissions=1546959939
  */
 
-namespace Aigachu\Lavenza\Client;
+namespace Aigachu\Lavenza\Client\DiscordClient;
 
 /**
  * Class LavenzaClient
@@ -19,7 +19,7 @@ namespace Aigachu\Lavenza\Client;
  *
  * @package Aigachu\Lavenza
  */
-class LavenzaClient extends ClientBase
+class LavenzaDiscordClient extends DiscordClientBase
 {
 
 }
