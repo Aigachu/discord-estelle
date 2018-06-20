@@ -22,7 +22,7 @@ use CharlotteDunois\Yasmin\HTTP\DiscordAPIException;
 class DiscordClient extends YasminClient implements DiscordClientInterface
 {
     /**
-     *
+     * @const string CLIENT_TYPE
      */
     const CLIENT_TYPE = 'discord';
 

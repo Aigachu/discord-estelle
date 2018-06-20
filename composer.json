@@ -1,5 +1,8 @@
 {
     "name": "aigachu/lavenza",
+    "description": "Lavenza is a Discord Bot Framework built on PHP using the CharlotteDunois\\Yasmin library.",
+    "type": "framework",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Aiga Chu",

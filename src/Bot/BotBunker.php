@@ -8,6 +8,7 @@
 
 namespace Aigachu\Lavenza\Bot;
 
+use Aigachu\Lavenza\Lavenza;
 use Aigachu\Lavenza\Configuration\ConfigRepository;
 
 /**
@@ -28,6 +29,7 @@ final class BotBunker
         foreach ($bots_config as $bot_id => $bot_config) {
             $bot = new Bot($bot_id, $bot_config);
             $bot->summon();
+            Lavenza::$bots[$bot_id] = $bot;
         }
     }
 }

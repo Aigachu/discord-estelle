@@ -8,7 +8,6 @@
 
 namespace Aigachu\Lavenza;
 
-use Aigachu\Lavenza\Bot\Bot;
 use Aigachu\Lavenza\Bot\BotBunker;
 use Aigachu\Lavenza\Configuration\ConfigRepository;
 use React\EventLoop\ExtEventLoop;
@@ -21,6 +20,12 @@ use React\EventLoop\Factory as ReactEventLoopFactory;
  */
 class Lavenza
 {
+
+    /**
+     * @var array $bots
+     */
+    public static $bots;
+
     /**
      * @var ExtEventLoop|LibEventLoop|LibEvLoop $loop
      */

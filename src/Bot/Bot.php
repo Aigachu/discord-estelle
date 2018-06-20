@@ -48,6 +48,9 @@ class Bot implements BotInterface
     {
         $this->id = $id;
         $this->config = $config;
+        foreach ($this->config['clients'] as $client_type => $client_config) {
+            $this->clients[$client_type] = ClientFactory::instantiate($client_type, $this);
+        }
     }
 
     /**
@@ -63,8 +66,8 @@ class Bot implements BotInterface
      * Login to the Discord server with all of Lavenza's bot clients.
      */
     public function summon(): bool {
-        foreach ($this->config['clients'] as $client_type => $client_config) {
-            $client = ClientFactory::instantiate($client_type, $this);
+
+        foreach ($this->clients as $client) {
             /**
              * @var ClientInterface $client
              */
