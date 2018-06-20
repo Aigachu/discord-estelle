@@ -8,49 +8,55 @@
 
 namespace Aigachu\Lavenza;
 
-use Aigachu\Lavenza\Client\DiscordClient\LavenzaDiscordClient;
+use Aigachu\Lavenza\Bot\Bot;
+use Aigachu\Lavenza\Bot\BotBunker;
+use Aigachu\Lavenza\Configuration\ConfigRepository;
+use React\EventLoop\ExtEventLoop;
+use React\EventLoop\LibEventLoop;
+use React\EventLoop\LibEvLoop;
+use React\EventLoop\Factory as ReactEventLoopFactory;
 
 /**
  * Class Lavenza
- * Lavenza's core. This class will house the core functionality of the bot.
- *
- * @package Aigachu\Lavenza
  */
 class Lavenza
 {
     /**
-     * The version of Lavenza.
-     * @var string
+     * @var ExtEventLoop|LibEventLoop|LibEvLoop $loop
      */
-    const VERSION = '0.0.1';
+    protected static $loop = null;
 
     /**
-     * Discord clients that Lavenza will use.
-     * @var array $clients
+     * Returns the application wide React Event Loop.
      */
-    protected $clients;
+    public static function loop() {
+        if (is_null(self::$loop)) {
+            self::$loop = ReactEventLoopFactory::create();
+        }
 
-    /**
-     * Lavenza constructor.
-     * @param array $config
-     */
-    public function __construct(array $config)
-    {
-        $this->clients = [
-            new LavenzaDiscordClient($config['discord']['clients']['lavenza']['token'], []),
-        ];
+        return self::$loop;
     }
 
     /**
-     * Lavenza Jack In function.
-     * Login to the Discord server with all of Lavenza's bot clients.
+     * Run all clients.
      */
-    public function jackIn() {
-        foreach ($this->clients as $client) {
-            /**
-             * @var LavenzaDiscordClient $client
-             */
-            $client->authenticate();
-        }
+    public static function run() {
+        self::deploy();
+        self::loop()->run();
+    }
+
+    /**
+     * Wrapper for the BotBunker.
+     */
+    public static function deploy() {
+        BotBunker::deploy();
+    }
+
+    /**
+     * Wrapper for Configuration Repository.
+     * @return array
+     */
+    public static function config() {
+        return ConfigRepository::config();
     }
 }

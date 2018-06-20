@@ -8,13 +8,10 @@
 
 namespace Aigachu\Lavenza\Client\DiscordClient;
 
-use Aigachu\Lavenza\Client\ClientInterface;
+use Aigachu\Lavenza\Bot\BotInterface;
+use Aigachu\Lavenza\Lavenza;
 use CharlotteDunois\Yasmin\Client as YasminClient;
-use React\EventLoop\Factory as ReactEventLoopFactory;
-use React\EventLoop\LibEventLoop;
-use React\EventLoop\ExtEventLoop;
-use React\EventLoop\LibEvLoop;
-use WebDriver\Exception;
+use CharlotteDunois\Yasmin\HTTP\DiscordAPIException;
 
 /**
  * Class LavenzaClient
@@ -22,17 +19,22 @@ use WebDriver\Exception;
  *
  * @package Aigachu\Lavenza
  */
-abstract class DiscordClientBase extends YasminClient implements ClientInterface
+class DiscordClient extends YasminClient implements DiscordClientInterface
 {
+    /**
+     *
+     */
+    const CLIENT_TYPE = 'discord';
+
+    /**
+     * @var BotInterface $bot
+     */
+    protected $bot;
+
     /**
      * @var String $token
      */
     public $token;
-
-    /**
-     * @var LibEventLoop|ExtEventLoop|LibEvLoop $loop
-     */
-    protected $loop;
 
     /**
      * @var array $listeners
@@ -41,21 +43,13 @@ abstract class DiscordClientBase extends YasminClient implements ClientInterface
 
     /**
      * LavenzaClient constructor.
-     * @param String $token
+     * @param BotInterface $bot
      * @param array $options
-     * @param null $loop
      */
-    function __construct(String $token, array $options = array(), $loop = null)
+    function __construct(BotInterface $bot, array $options = array())
     {
-        // Initialize the React Loop.
-        if (is_null($loop)) {
-            $this->loop = ReactEventLoopFactory::create();
-        } else {
-            $this->loop = $loop;
-        }
-
         // Set the token to the client.
-        $this->token = $token;
+        $this->token = $bot->getConfig()['clients'][self::CLIENT_TYPE]['token'];
 
         // Listener for Ready event.
         $this->on('ready', function () {
@@ -67,8 +61,8 @@ abstract class DiscordClientBase extends YasminClient implements ClientInterface
             echo 'Received Message from '.$message->author->tag.' in '.($message->channel->type === 'text' ? 'channel #'.$message->channel->name : 'DM').' with '.$message->attachments->count().' attachment(s) and '.\count($message->embeds).' embed(s)'.PHP_EOL;
         });
 
-        // Run CharlotteDunois's Client Constructor
-        parent::__construct($options, $loop);
+        // Run Yasmin's Client Constructor
+        parent::__construct($options, Lavenza::loop());
     }
 
     /**
@@ -78,11 +72,27 @@ abstract class DiscordClientBase extends YasminClient implements ClientInterface
         try {
             // Runs Yasmin's default login function with the given token.
             parent::login($this->token);
-
-            // Run React EventLoop.
-            $this->loop->run();
-        } catch (Exception $e) {
+        } catch (DiscordAPIException $e) {
             throwException($e);
         }
+    }
+
+    /**
+     * Introduction
+     * This is the message that will be sent to the bot's configured "Home" channel.
+     */
+    public function intro()
+    {
+        // TODO: Implement intro() method.
+    }
+
+    /**
+     * Sets the activity if one is specified, if not, uses the default one set for the bot if present.
+     * @param string $activity
+     * @return mixed|void
+     */
+    public function activity($activity = '')
+    {
+        // TODO: Implement activity() method.
     }
 }

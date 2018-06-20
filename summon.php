@@ -3,24 +3,14 @@
 // Require Vendor Composer Autoloader
 require __DIR__ . '/vendor/autoload.php';
 
-// Require Project Autoloader
-require __DIR__ . '/autoload.php';
+// Set a constant for the ROOT of the project codebase.
+const ROOT_PATH = __DIR__ . "/";
 
-// Require Configurations
-if (file_exists(__DIR__ . '/config.php')) {
-    $config = [];
-    require __DIR__ . '/config.php';
-} else {
-    echo "\nPlease verify that a configuration file is present in the directory.\n";
-    echo "If needed, create one basing yourself on the example.config.php file found in this directory.\n";
-    exit();
-}
+// Set a constant for the root of the configuration path.
+const CONFIG_PATH = ROOT_PATH . "config/";
 
-// Use Main Lavenza class as core.
-use Aigachu\Lavenza\Lavenza as Core;
-
-// Instantiate Lavenza.
-$lavenza = new Core($config);
+// Import Lavenza.
+use Aigachu\Lavenza\Lavenza;
 
 // Jack in! Lavenza, Execute!!!
-$lavenza->jackIn();
+Lavenza::run();

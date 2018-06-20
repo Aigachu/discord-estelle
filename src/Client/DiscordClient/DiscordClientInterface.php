@@ -8,19 +8,21 @@
 
 namespace Aigachu\Lavenza\Client\DiscordClient;
 
+use Aigachu\Lavenza\Client\ClientInterface;
+
 /**
  * Interface DiscordClientInterface
  * @package Aigachu\Lavenza\Client\DiscordClient
  */
-interface DiscordClientInterface
+interface DiscordClientInterface extends ClientInterface
 {
     /**
      * @return mixed
      */
-    public function introduction();
+    public function intro();
 
     /**
      * @return mixed
      */
-    public function playing();
+    public function activity();
 }
