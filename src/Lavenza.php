@@ -27,6 +27,9 @@ class Lavenza
     // Define this class as a Singleton.
     use SingletonTrait;
 
+    // Lavenza's version. Try to remember to increment this. ;D
+    const VERSION = '0.0.1';
+
     /**
      * React EventLoop.
      * @var ExtEventLoop|LibEventLoop|LibEvLoop $loop
