@@ -12,6 +12,8 @@
     "require": {
         "charlottedunois/yasmin": "^0.4.1",
         "symfony/yaml": "^4.1",
+        "react/event-loop": "^0.4.3",
+        "react/promise": "^2.5.1",
         "doctrine/cache": "^1.7",
         "behat/behat": "^3.4"
     },

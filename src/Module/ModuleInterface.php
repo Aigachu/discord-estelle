@@ -6,13 +6,13 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Listener;
+namespace Aigachu\Lavenza\Module;
 
 /**
- * Class ListenerBase
- * @package Aigachu\Lavenza\Listener
+ * Interface ModuleInterface
+ * @package Aigachu\Lavenza\Module
  */
-class ListenerBase
+interface ModuleInterface
 {
 
 }

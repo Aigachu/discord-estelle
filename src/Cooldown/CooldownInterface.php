@@ -6,13 +6,13 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Listener;
+namespace Aigachu\Lavenza\Cooldown;
 
 /**
- * Interface ListenerInterface
- * @package Aigachu\Lavenza\Listener
+ * Interface CooldownInterface
+ * @package Aigachu\Lavenza\Cooldown
  */
-interface ListenerInterface
+interface CooldownInterface
 {
 
 }

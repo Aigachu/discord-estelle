@@ -6,7 +6,7 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Client\DiscordClient;
+namespace Aigachu\Lavenza\Bot\Client\DiscordClient;
 
 use Aigachu\Lavenza\Bot\BotInterface;
 use Aigachu\Lavenza\Lavenza;
@@ -56,8 +56,11 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
         // Run Yasmin's Client Constructor
         parent::__construct($options, Lavenza::loop());
 
+        // Set bot object to client.
+        $this->bot = $bot;
+
         // Set the client's configuration taken from the Bot.
-        $this->config = $bot->getConfig()['clients'][self::CLIENT_TYPE];
+        $this->config = $this->bot->getConfig()['clients'][self::CLIENT_TYPE];
 
         // Set the token to the client.
         $this->token = $this->config['token'];
@@ -75,8 +78,33 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
 
         // Listener for Message event.
         $this->on('message', function ($message) {
+            $content = $message->content;
+            if (strpos($content, $this->config['cprefix']) === 0) {
+                foreach ($this->bot->getCommands('all') as $command) {
+                    if (strpos($content, $command->key) === 0 + strlen($this->config['cprefix'])) {
+                        $command->execute($this, $message);
+                    }
+                }
+
+                foreach ($this->bot->getCommands('discord') as $command) {
+                    if (strpos($content, $command->key) === 0 + strlen($this->config['cprefix'])) {
+                        $command->execute($this, $message);
+                    }
+                }
+            }
+
             echo 'Received Message from '.$message->author->tag.' in '.($message->channel->type === 'text' ? 'channel #'.$message->channel->name : 'DM').' with '.$message->attachments->count().' attachment(s) and '.\count($message->embeds).' embed(s)'.PHP_EOL;
         });
+    }
+
+    /**
+     * Basic function to reply to a message that was heard.
+     * @param $message
+     * @return mixed|void
+     */
+    public function reply($message, $text)
+    {
+        $message->channel->send($text);
     }
 
     /**
@@ -90,14 +118,6 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
         } catch (DiscordAPIException $e) {
             throwException($e);
         }
-    }
-
-    /**
-     * Ready function
-     * @TODO - Documentation
-     */
-    public function runBootTasks() {
-        $this->activity();
     }
 
     /**
@@ -120,5 +140,13 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
             $activity = $this->config['activity'];
 
         $this->user->setActivity($activity);
+    }
+
+    /**
+     * Ready function
+     * @TODO - Documentation
+     */
+    public function runBootTasks() {
+        $this->activity();
     }
 }

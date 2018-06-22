@@ -8,6 +8,7 @@
 
 namespace Aigachu\Lavenza\Configuration;
 
+use Aigachu\Lavenza\Singleton\SingletonTrait;
 use Doctrine\Common\Cache\ApcuCache;
 use Symfony\Component\Yaml\Yaml;
 
@@ -17,6 +18,8 @@ use Symfony\Component\Yaml\Yaml;
  */
 final class ConfigRepository
 {
+    use SingletonTrait;
+
     /**
      * Fetch configuration data for a given scope.
      * Fetches all configuration scopes if a scope isn't specified.
@@ -34,8 +37,10 @@ final class ConfigRepository
         $cache = new ApcuCache();
         $cache_key = "config::$scope";
 
+        // Attempt to fetch configurations in cache.
         $configurations = $cache->fetch($cache_key);
 
+        // If we don't find configurations in cache, we gotta get them normally.
         if ($configurations == null) {
             // First we get an array containing all the directories we need to parse.
             // If a scope is set, we will only go into the needed directory, instead of fetching all of the directories.
@@ -59,7 +64,7 @@ final class ConfigRepository
                     $config_key = str_replace($config_files_path, '', $filepath);
                     $config_key = str_replace('.config.yml', '', $config_key);
 
-                    if ($config_key === 'example')
+                    if (in_array($config_key, ['example']))
                         continue;
 
                     $configurations[$scope][$config_key] = Yaml::parse(file_get_contents($filepath));;

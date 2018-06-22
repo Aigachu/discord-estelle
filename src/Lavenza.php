@@ -10,6 +10,8 @@ namespace Aigachu\Lavenza;
 
 use Aigachu\Lavenza\Bot\BotBunker;
 use Aigachu\Lavenza\Configuration\ConfigRepository;
+use Aigachu\Lavenza\Module\ModuleManager;
+use Aigachu\Lavenza\Singleton\SingletonTrait;
 use Aigachu\Lavenza\Text\TextManager;
 use React\EventLoop\ExtEventLoop;
 use React\EventLoop\LibEventLoop;
@@ -21,10 +23,20 @@ use React\EventLoop\Factory as ReactEventLoopFactory;
  */
 class Lavenza
 {
+    use SingletonTrait;
+
     /**
      * @var ExtEventLoop|LibEventLoop|LibEvLoop $loop
      */
     protected static $loop = null;
+
+    /**
+     * Lavenza constructor.
+     * @param null $loop
+     */
+    protected function __construct($loop = null)
+    {
+    }
 
     /**
      * Returns the application wide React Event Loop.
@@ -33,12 +45,11 @@ class Lavenza
         if (is_null(self::$loop)) {
             self::$loop = ReactEventLoopFactory::create();
         }
-
         return self::$loop;
     }
 
     /**
-     * Deploy & Run all clients.
+     * Deploy & Run all bot clients.
      */
     public static function run() {
         self::loop()->run();
@@ -71,10 +82,17 @@ class Lavenza
     }
 
     /**
-     * Get all of the bots currently active.
+     * Return the single instance of the Module Manager.
      */
-    public static function bots() {
-        return BotBunker::getBots();
+    public static function moduleManager() {
+        return ModuleManager::Instance();
+    }
+
+    /**
+     * Return the list of modules from the Module Manager.
+     */
+    public static function modules() {
+        return self::moduleManager()->getModules();
     }
 
     /**
@@ -88,11 +106,34 @@ class Lavenza
     }
 
     /**
+     * Return the single instance of the Bot Bunker.
+     * @return BotBunker
+     */
+    public static function botBunker() {
+        return BotBunker::Instance();
+    }
+
+    /**
+     * Get all of the bots currently active.
+     */
+    public static function bots() {
+        return self::botBunker()->getBots();
+    }
+
+    /**
      * Wrapper for Configuration Repository's config function. Houses all of the configuration for
      * @param string $scope
      * @return array
      */
     public static function config($scope = 'full'): array {
         return ConfigRepository::config($scope);
+    }
+
+    /**
+     * Return the single instance of the Configuration Repository
+     * @return ConfigRepository
+     */
+    public static function configRepository() {
+        return ConfigRepository::Instance();
     }
 }

@@ -9,23 +9,19 @@ const ROOT_PATH = __DIR__ . "/";
 // Set a constant for the root of the configuration path.
 const CONFIG_PATH = ROOT_PATH . "config/";
 
-// Import Lavenza.
+// Import Lavenza Core.
 use Aigachu\Lavenza\Lavenza;
 
-// Script Options
-//$longopts  = array(
-//    "required:",     // Required value
-//    "optional::",    // Optional value
-//    "option",        // No value
-//    "opt",           // No value
-//);
-
+/**
+ * Script Options
+ * @option NoValue --debug - Summon Mikuchu, the development bot.
+ */
 $options = getopt('d', [
-  'debug'
+  'debug',
 ]);
 
 // If the debug option is set, we only want to run the development bot.
-// Otherwise, run the specified bots below.
+// Otherwise, run the specified bots below. If no bots are specified, run them all.
 if (isset($options['debug'])) {
     // Jack in! Lavenza, Execute!!!
     Lavenza::summon(['development'])->run();

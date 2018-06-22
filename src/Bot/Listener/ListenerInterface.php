@@ -6,13 +6,13 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Command;
+namespace Aigachu\Lavenza\Bot\Listener;
 
 /**
- * Interface CommandInterface
- * @package Aigachu\Lavenza\Command
+ * Interface ListenerInterface
+ * @package Aigachu\Lavenza\Bot\Listener
  */
-interface CommandInterface
+interface ListenerInterface
 {
 
 }

@@ -18,4 +18,15 @@ interface BotInterface
      * @return mixed
      */
     public function getConfig();
+
+    /**
+     * @return mixed
+     */
+    public function getModules();
+
+    /**
+     * @param null $environment
+     * @return mixed
+     */
+    public function getCommands($environment = null);
 }

@@ -9,7 +9,7 @@
 namespace Aigachu\Lavenza\Bot;
 
 use Aigachu\Lavenza\Lavenza;
-use Aigachu\Lavenza\Configuration\ConfigRepository;
+use Aigachu\Lavenza\Singleton\SingletonTrait;
 
 /**
  * Class BotBunker
@@ -22,10 +22,12 @@ final class BotBunker
      */
     protected static $bots = [];
 
+    use SingletonTrait;
+
     /**
      * @return array
      */
-    public static function getBots(): array
+    public function getBots(): array
     {
         return self::$bots;
     }
@@ -48,7 +50,10 @@ final class BotBunker
 
         // If the array of ids is empty, we assume that we must summon all of the bots found in config.
         if (empty($ids)) {
+            // Fetch all bot configurations.
             $bots_to_summon = Lavenza::config('bots');
+            // Unset development bot configuration
+            unset($bots_to_summon['development']);
             self::instantiateBots($bots_to_summon);
             return true;
         }
@@ -60,7 +65,7 @@ final class BotBunker
                 Lavenza::io('NO_BOT_CONFIG_FOUND_FOR_SINGLE_BOT', [$id]);
                 continue;
             }
-
+            // Set bot to be summoned.
             $bots_to_summon[$id] = Lavenza::config('bots')[$id];
         }
 

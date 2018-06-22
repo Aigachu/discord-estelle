@@ -29,7 +29,7 @@ This is a fairly trivial example of using Yasmin. You should put all your listen
 #
 clients:
   discord:
-    token: 'NDU2NTY3MDcyMDM0NTIxMDk4.Dgtq9w.GQ1svlMpIhkX0Dvodnr0ZDp6awc'
+    token: ''
     cprefix: '!L'
     activity: 'Test activity.'
     intro: ''

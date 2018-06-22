@@ -6,10 +6,10 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Client\TwitchClient;
+namespace Aigachu\Lavenza\Bot\Client\TwitchClient;
 
 use Aigachu\Lavenza\Bot\BotInterface;
-use Aigachu\Lavenza\Client\ClientInterface;
+use Aigachu\Lavenza\Bot\Client\ClientInterface;
 
 class TwitchClient implements ClientInterface
 {

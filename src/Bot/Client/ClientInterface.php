@@ -6,11 +6,11 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Client;
+namespace Aigachu\Lavenza\Bot\Client;
 
 /**
  * Interface ClientInterface
- * @package Aigachu\Lavenza\Client
+ * @package Aigachu\Lavenza\Bot\Client
  */
 interface ClientInterface
 {
@@ -19,4 +19,11 @@ interface ClientInterface
      * @return mixed
      */
     public function authenticate();
+
+    /**
+     * @param mixed $message
+     * @param String $text
+     * @return mixed
+     */
+    public function reply($message, $text);
 }

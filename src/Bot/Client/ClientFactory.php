@@ -6,14 +6,14 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Client;
+namespace Aigachu\Lavenza\Bot\Client;
 
-use Aigachu\Lavenza\Client\DiscordClient\DiscordClient;
-use Aigachu\Lavenza\Client\TwitchClient\TwitchClient;
+use Aigachu\Lavenza\Bot\Client\DiscordClient\DiscordClient;
+use Aigachu\Lavenza\Bot\Client\TwitchClient\TwitchClient;
 
 /**
  * Class ClientFactory
- * @package Aigachu\Lavenza\Client
+ * @package Aigachu\Lavenza\Bot\Client
  */
 abstract class ClientFactory
 {

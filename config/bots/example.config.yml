@@ -10,12 +10,12 @@
 # @see - https://discordapp.com/developers/applications/me
 #
 clients:
-  - discord:
-      token: '12345'
-      cprefix: '!L'
-      activity: ''
-      intro: ''
+  discord:
+    token: '12345'
+    cprefix: '!L'
+    activity: ''
+    intro: ''
 
-#  - twitch:
-#      token: '12345'
-#      cprefix: '!L'
+# twitch:
+#   token: '12345'
+#   cprefix: '!L'

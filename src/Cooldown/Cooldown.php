@@ -6,13 +6,13 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Command;
+namespace Aigachu\Lavenza\Cooldown;
 
 /**
- * Class CommandBase
- * @package Aigachu\Lavenza\Command
+ * Class Cooldown
+ * @package Aigachu\Lavenza\Cooldown
  */
-class CommandBase
+class Cooldown
 {
 
 }
