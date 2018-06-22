@@ -7,6 +7,7 @@
  */
 
 namespace Aigachu\Lavenza\Client;
+
 use Aigachu\Lavenza\Client\DiscordClient\DiscordClient;
 use Aigachu\Lavenza\Client\TwitchClient\TwitchClient;
 
@@ -26,6 +27,16 @@ abstract class ClientFactory
             case 'twitch':
                 return new TwitchClient($bot);
                 break;
+
+//            case 'youtube':
+//                return new YoutubeClient($bot);
+//                break;
+
+            // It's just a joke really. I'm going to keep making it across the code. Because who in the F!$@? would want to make a Skype bot?
+            // Gross.
+//             case 'skype':
+//                 return new SkypeClient($bot);
+//                 break;
 
             default:
                 return null;

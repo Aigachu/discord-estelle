@@ -11,9 +11,13 @@
     ],
     "require": {
         "charlottedunois/yasmin": "^0.4.1",
-        "symfony/yaml": "^4.1"
+        "symfony/yaml": "^4.1",
+        "doctrine/cache": "^1.7",
+        "behat/behat": "^3.4"
     },
     "autoload": {
         "psr-4": {"Aigachu\\Lavenza\\": "src/"}
+    },
+    "require-dev": {
     }
 }

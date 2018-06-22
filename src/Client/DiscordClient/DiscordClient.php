@@ -32,6 +32,11 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
     protected $bot;
 
     /**
+     * @var array $config
+     */
+    protected $config;
+
+    /**
      * @var String $token
      */
     public $token;
@@ -48,25 +53,35 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
      */
     function __construct(BotInterface $bot, array $options = array())
     {
+        // Run Yasmin's Client Constructor
+        parent::__construct($options, Lavenza::loop());
+
+        // Set the client's configuration taken from the Bot.
+        $this->config = $bot->getConfig()['clients'][self::CLIENT_TYPE];
+
         // Set the token to the client.
-        $this->token = $bot->getConfig()['clients'][self::CLIENT_TYPE]['token'];
+        $this->token = $this->config['token'];
 
         // Listener for Ready event.
         $this->on('ready', function () {
+
+            // Run Boot tasks
+            $this->runBootTasks();
+
+            // Console log to confirm ready state.
             echo 'Logged in as '.$this->user->tag.' created on '.$this->user->createdAt->format('d.m.Y H:i:s').PHP_EOL;
+
         });
 
         // Listener for Message event.
         $this->on('message', function ($message) {
             echo 'Received Message from '.$message->author->tag.' in '.($message->channel->type === 'text' ? 'channel #'.$message->channel->name : 'DM').' with '.$message->attachments->count().' attachment(s) and '.\count($message->embeds).' embed(s)'.PHP_EOL;
         });
-
-        // Run Yasmin's Client Constructor
-        parent::__construct($options, Lavenza::loop());
     }
 
     /**
      * Login function
+     * @TODO - Documentation
      */
     public function authenticate() {
         try {
@@ -75,6 +90,14 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
         } catch (DiscordAPIException $e) {
             throwException($e);
         }
+    }
+
+    /**
+     * Ready function
+     * @TODO - Documentation
+     */
+    public function runBootTasks() {
+        $this->activity();
     }
 
     /**
@@ -93,6 +116,9 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
      */
     public function activity($activity = '')
     {
-        // TODO: Implement activity() method.
+        if (empty($activity))
+            $activity = $this->config['activity'];
+
+        $this->user->setActivity($activity);
     }
 }
