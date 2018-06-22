@@ -6,20 +6,20 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Module\PingPong\Command;
+namespace Aigachu\Lavenza\Module\Core\Command;
 
 use Aigachu\Lavenza\Bot\Command\CommandBase;
 
 /**
- * Class PingCommand
+ * Class PongPingCommand
  * @package Aigachu\Lavenza\Module\PingModule\Command
  */
-final class PingPongCommand extends CommandBase
+final class PongPingCommand extends CommandBase
 {
     /**
      * @var string $key
      */
-    public $key = 'ping';
+    public $key = 'pong';
 
     /**
      * @var string $key
@@ -33,6 +33,6 @@ final class PingPongCommand extends CommandBase
      */
     public static function execute($client, $message)
     {
-        $client->reply($message, 'Pong!');
+        $client->reply($message, 'Ping!');
     }
 }

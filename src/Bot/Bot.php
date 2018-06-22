@@ -124,6 +124,7 @@ class Bot implements BotInterface
      */
     private function initializeClients($clients_config) {
         try {
+            // Instantiate Clients with the given configurations.
             foreach ($clients_config as $client_type => $client_config) {
                 $this->clients[$client_type] = ClientFactory::instantiate($client_type, $this);
             }
@@ -137,9 +138,22 @@ class Bot implements BotInterface
      */
     private function initializeModules($modules_config) {
         try {
+            // Initialize Modules with the given configurations.
             foreach ($modules_config as $module_name) {
-                $this->modules[$module_name] = Lavenza::moduleManager()->load($module_name);
+
+                // Load the module with the module manager.
+                $module = Lavenza::moduleManager()->load($module_name);
+
+                // If the module could not be loaded, we'll skip this module and throw an error.
+                if (is_null($module)) {
+                    Lavenza::io('NO_MODULE_FOUND_FOR_BOT', [$module_name, $this->id]);
+                    continue;
+                }
+
+                // Set the module and the commands.
+                $this->modules[$module_name] = $module;
                 $this->commands = array_merge_recursive($this->commands, $this->modules[$module_name]->getCommands());
+                // var_dump($this->modules[$module_name]->getCommands());
             }
         } catch(Exception $e) {
             Lavenza::io("Hello?");

@@ -8,10 +8,12 @@
 
 namespace Aigachu\Lavenza\Module;
 
+use Aigachu\Lavenza\Lavenza;
 use Aigachu\Lavenza\Singleton\SingletonTrait;
 
 /**
  * Class ModuleManager
+ * Manages the loading and packaging of modules and their commands.
  * @package Aigachu\Lavenza\Module
  */
 final class ModuleManager
@@ -29,6 +31,10 @@ final class ModuleManager
      * @return mixed
      */
     public function load($name) {
+        if (!isset(self::$modules[$name])) {
+            Lavenza::io('FAILED_MODULE_LOAD', [$name]);
+            return null;
+        }
         return self::$modules[$name];
     }
 
@@ -37,7 +43,7 @@ final class ModuleManager
      */
     protected function __construct()
     {
-        self::modules();
+        self::loadModules();
     }
 
     /**
@@ -49,9 +55,9 @@ final class ModuleManager
     }
 
     /**
-     * Oh boy.
+     * For each module folder found in this folder, we load the module's class into the Manager.
      */
-    private function modules() {
+    private function loadModules() {
         $moduleFolders = array_filter(glob(__DIR__ . '/*'), 'is_dir');
 
         foreach ($moduleFolders as $folder_path) {

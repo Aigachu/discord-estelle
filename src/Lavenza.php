@@ -20,12 +20,15 @@ use React\EventLoop\Factory as ReactEventLoopFactory;
 
 /**
  * Class Lavenza
+ * Core class that will house utility functions and wrappers for many of the other components in the application.
  */
 class Lavenza
 {
+    // Define this class as a Singleton.
     use SingletonTrait;
 
     /**
+     * React EventLoop.
      * @var ExtEventLoop|LibEventLoop|LibEvLoop $loop
      */
     protected static $loop = null;
@@ -39,7 +42,8 @@ class Lavenza
     }
 
     /**
-     * Returns the application wide React Event Loop.
+     * Returns the application wide React EventLoop.
+     * We only want one loop to run for all clients.
      */
     public static function loop() {
         if (is_null(self::$loop)) {
@@ -49,7 +53,8 @@ class Lavenza
     }
 
     /**
-     * Deploy & Run all bot clients.
+     * Run the React EventLoop.
+     * @Note This function should only run once, at the end of everything else.
      */
     public static function run() {
         self::loop()->run();
@@ -59,7 +64,7 @@ class Lavenza
      * Get text from TextLibrary.
      * @param $constant
      * @param array $placeholder_values
-     * @return mixed
+     * @return string
      */
     public static function getText($constant, $placeholder_values = []) {
         return TextManager::get($constant, $placeholder_values);
@@ -84,15 +89,31 @@ class Lavenza
     /**
      * Return the single instance of the Module Manager.
      */
+    public static function textManager() {
+        return TextManager::Instance();
+    }
+
+    /**
+     * Return the single instance of the Module Manager.
+     */
     public static function moduleManager() {
         return ModuleManager::Instance();
     }
 
     /**
-     * Return the list of modules from the Module Manager.
+     * Return the single instance of the Bot Bunker.
+     * @return BotBunker
      */
-    public static function modules() {
-        return self::moduleManager()->getModules();
+    public static function botBunker() {
+        return BotBunker::Instance();
+    }
+
+    /**
+     * Return the single instance of the Configuration Repository
+     * @return ConfigRepository
+     */
+    public static function configRepository() {
+        return ConfigRepository::Instance();
     }
 
     /**
@@ -106,21 +127,6 @@ class Lavenza
     }
 
     /**
-     * Return the single instance of the Bot Bunker.
-     * @return BotBunker
-     */
-    public static function botBunker() {
-        return BotBunker::Instance();
-    }
-
-    /**
-     * Get all of the bots currently active.
-     */
-    public static function bots() {
-        return self::botBunker()->getBots();
-    }
-
-    /**
      * Wrapper for Configuration Repository's config function. Houses all of the configuration for
      * @param string $scope
      * @return array
@@ -129,11 +135,5 @@ class Lavenza
         return ConfigRepository::config($scope);
     }
 
-    /**
-     * Return the single instance of the Configuration Repository
-     * @return ConfigRepository
-     */
-    public static function configRepository() {
-        return ConfigRepository::Instance();
-    }
+
 }

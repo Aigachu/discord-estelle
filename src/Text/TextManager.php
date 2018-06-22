@@ -8,12 +8,17 @@
 
 namespace Aigachu\Lavenza\Text;
 
+use Aigachu\Lavenza\Singleton\SingletonTrait;
+
 /**
  * Class TextConstants
  * @package Aigachu\Lavenza\Text
  */
 final class TextManager extends TextLibrary
 {
+    // Define this class as a Singleton.
+    use SingletonTrait;
+
     /**
      * @param $constant
      * @param $placeholder_values

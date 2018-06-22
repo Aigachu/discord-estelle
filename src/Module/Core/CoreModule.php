@@ -6,16 +6,15 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Module\PingPong;
+namespace Aigachu\Lavenza\Module\Core;
 
 use Aigachu\Lavenza\Module\ModuleBase;
-use Aigachu\Lavenza\Module\PingPong\Command\PingPongCommand;
 
 /**
  * Class PingPongModule
  * @package Aigachu\Lavenza\Module\PingPong
  */
-class PingPongModule extends ModuleBase
+final class CoreModule extends ModuleBase
 {
 
 }
