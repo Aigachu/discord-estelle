@@ -11,7 +11,7 @@ namespace Aigachu\Lavenza;
 use Aigachu\Lavenza\Bot\BotBunker;
 use Aigachu\Lavenza\Configuration\ConfigRepository;
 use Aigachu\Lavenza\Module\ModuleManager;
-use Aigachu\Lavenza\Singleton\SingletonTrait;
+use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
 use Aigachu\Lavenza\Text\TextManager;
 use React\EventLoop\ExtEventLoop;
 use React\EventLoop\LibEventLoop;
@@ -85,12 +85,14 @@ class Lavenza
         if (TextManager::get($text, $placeholder_values))
             $text = TextManager::get($text, $placeholder_values);
 
+        // Output the text to the console.
         echo $text;
         echo "\n";
     }
 
     /**
-     * Return the single instance of the Module Manager.
+     * Return the single instance of the Text Manager.
+     * This is the TextManager. It'll manager fetching texts out of the Text Library.
      */
     public static function textManager() {
         return TextManager::Instance();
@@ -98,6 +100,7 @@ class Lavenza
 
     /**
      * Return the single instance of the Module Manager.
+     * The Module Manager manages bot modules. Each module is a collection of commands and features.
      */
     public static function moduleManager() {
         return ModuleManager::Instance();
@@ -105,6 +108,7 @@ class Lavenza
 
     /**
      * Return the single instance of the Bot Bunker.
+     * The BotBunker is a...Bunker...For the bots.
      * @return BotBunker
      */
     public static function botBunker() {

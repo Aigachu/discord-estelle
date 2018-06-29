@@ -9,7 +9,7 @@
 namespace Aigachu\Lavenza\Bot\Command;
 
 use Aigachu\Lavenza\Bot\Listener\CommandListener\CommandListenerInterface;
-use Aigachu\Lavenza\Singleton\SingletonTrait;
+use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
 
 /**
  * Class CommandBase

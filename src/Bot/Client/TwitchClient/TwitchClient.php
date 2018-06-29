@@ -27,4 +27,9 @@ class TwitchClient implements ClientInterface
     {
         // TODO: Implement authenticate() method.
     }
+
+    public function reply($message, $text)
+    {
+        // TODO: Implement reply() method.
+    }
 }

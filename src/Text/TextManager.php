@@ -8,7 +8,7 @@
 
 namespace Aigachu\Lavenza\Text;
 
-use Aigachu\Lavenza\Singleton\SingletonTrait;
+use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
 
 /**
  * Class TextConstants

@@ -8,12 +8,17 @@
 
 namespace Aigachu\Lavenza\Text;
 
+use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
+
 /**
  * Class TextConstants
  * @package Aigachu\Lavenza\Text
  */
 abstract class TextLibrary
 {
+    // Declare class as Singleton.
+    use SingletonTrait;
+
     // === Bot Bunker Error Texts ===
     const NO_BOT_CONFIG_FOUND                       = "There doesn't seem to be any configuration for bots. Please create a configuration file and try again.";
     const NO_BOT_CONFIG_FOUND_FOR_SINGLE_BOT        = "Configuration not found for the requested summoning of the \"@1\" bot. Please verify or create a configuration file.";

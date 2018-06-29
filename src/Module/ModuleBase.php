@@ -8,7 +8,7 @@
 
 namespace Aigachu\Lavenza\Module;
 
-use Aigachu\Lavenza\Singleton\SingletonTrait;
+use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
 use ReflectionClass;
 
 /**
