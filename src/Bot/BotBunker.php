@@ -45,9 +45,6 @@ final class BotBunker
             return false;
         }
 
-        // Initialize array of configuration for bots that will be deployed.
-        $bots_to_summon = [];
-
         // If the array of ids is empty, we assume that we must summon all of the bots found in config.
         if (empty($ids)) {
             // Fetch all bot configurations.
@@ -60,23 +57,25 @@ final class BotBunker
 
         // If the array of ids isn't empty, loop in them and instantiate each bot.
         foreach ($ids as $id) {
-            // Check for the individual bot configuration.
-            if (!isset(Lavenza::config('bots')[$id])) {
-                Lavenza::io('NO_BOT_CONFIG_FOUND_FOR_SINGLE_BOT', [$id]);
-                continue;
-            }
-            // Set bot to be summoned.
-            $bots_to_summon[$id] = Lavenza::config('bots')[$id];
+            self::deployBot($id);
         }
 
-        // Check if the configuration for bots is empty.
-        if (empty($bots_to_summon)) {
-            Lavenza::io('NO_BOT_CONFIG_FOUND_FOR_REQUESTED_BOTS');
+        return true;
+    }
+
+    /**
+     * Deploy a single bot.
+     */
+    public static function deployBot($id) {
+        // Check for the individual bot configuration.
+        if (!isset(Lavenza::config('bots')[$id])) {
+            Lavenza::io('NO_BOT_CONFIG_FOUND_FOR_SINGLE_BOT', [$id]);
             return false;
         }
+        // Set bot to be summoned.
+        $bots_to_summon[$id] = Lavenza::config('bots')[$id];
 
         self::instantiateBots($bots_to_summon);
-        return true;
     }
 
     /**
