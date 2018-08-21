@@ -1,6 +1,12 @@
 <?php
+/**
+ * Lavenza
+ * Copyright 2017-2018 Aigachu, All Rights Reserved
+ *
+ * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
+ */
 
-// Require Composer Autoloader
+// Require composer autoloader.
 require __DIR__ . '/vendor/autoload.php';
 
 // Set a constant for the ROOT of the project codebase.
@@ -8,6 +14,15 @@ const ROOT_PATH = __DIR__ . "/";
 
 // Set a constant for the root of the configuration path.
 const CONFIG_PATH = ROOT_PATH . "config/";
+
+/**
+ * Include all files in the ./includes folder.
+ * This allows for better organization of files that should automatically be included in the project.
+ */
+foreach (glob(__DIR__ . "/includes/*.php") as $filename) {
+    $filename = str_replace(__DIR__ . '/', '', $filename);
+    include_once $filename;
+}
 
 // Import Lavenza Core.
 use Aigachu\Lavenza\Lavenza;

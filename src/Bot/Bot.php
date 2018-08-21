@@ -34,10 +34,10 @@ class Bot implements BotInterface
     protected $clients;
 
     /**
-     * Modules that the bot will utilize.
+     * Features that the bot will utilize.
      * @var array $modules
      */
-    protected $modules;
+    protected $features;
 
     /**
      *
@@ -62,9 +62,9 @@ class Bot implements BotInterface
         $this->id = $id;
         $this->config = $config;
 
-        // Initialize modules
-        if (isset($this->config['modules']))
-            $this->initializeModules($this->config['modules']);
+        // Initialize features
+        if (isset($this->config['features']))
+            $this->buildFeatures($this->config['features']);
     }
 
     /**
@@ -78,9 +78,9 @@ class Bot implements BotInterface
     /**
      * @return array
      */
-    public function getModules(): array
+    public function getFeatures(): array
     {
-        return $this->modules;
+        return $this->features;
     }
 
     /**
@@ -136,24 +136,23 @@ class Bot implements BotInterface
     /**
      * @param $modules_config
      */
-    private function initializeModules($modules_config) {
+    private function buildFeatures($modules_config) {
         try {
             // Initialize Modules with the given configurations.
-            foreach ($modules_config as $module_name) {
+            foreach ($modules_config as $feature_name) {
 
                 // Load the module with the module manager.
-                $module = Lavenza::moduleManager()->load($module_name);
+                $feature = Lavenza::featureManager()->load($feature_name);
 
                 // If the module could not be loaded, we'll skip this module and throw an error.
-                if (is_null($module)) {
-                    Lavenza::io('NO_MODULE_FOUND_FOR_BOT', [$module_name, $this->id]);
+                if (is_null($feature)) {
+                    Lavenza::io('NO_MODULE_FOUND_FOR_BOT', [$feature_name, $this->id]);
                     continue;
                 }
 
                 // Set the module and the commands.
-                $this->modules[$module_name] = $module;
-                $this->commands = array_merge_recursive($this->commands, $this->modules[$module_name]->getCommands());
-                // var_dump($this->modules[$module_name]->getCommands());
+                $this->features[$feature_name] = $feature;
+                $this->commands = array_merge_recursive($this->commands, $this->features[$feature_name]->getCommands());
             }
         } catch(Exception $e) {
             Lavenza::io("Hello?");

@@ -12,7 +12,7 @@ namespace Aigachu\Lavenza\Module;
  * Interface ModuleInterface
  * @package Aigachu\Lavenza\Module
  */
-interface ModuleInterface
+interface FeatureInterface
 {
 
 }

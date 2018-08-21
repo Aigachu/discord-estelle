@@ -8,13 +8,13 @@
 
 namespace Aigachu\Lavenza\Module\Core;
 
-use Aigachu\Lavenza\Module\ModuleBase;
+use Aigachu\Lavenza\Module\FeatureBase;
 
 /**
  * Class PingPongModule
  * @package Aigachu\Lavenza\Module\PingPong
  */
-final class CoreModule extends ModuleBase
+final class CoreFeature extends FeatureBase
 {
 
 }

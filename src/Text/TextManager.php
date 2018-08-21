@@ -16,9 +16,6 @@ use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
  */
 final class TextManager extends TextLibrary
 {
-    // Define this class as a Singleton.
-    use SingletonTrait;
-
     /**
      * @param $constant
      * @param $placeholder_values

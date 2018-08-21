@@ -22,7 +22,7 @@ interface BotInterface
     /**
      * @return mixed
      */
-    public function getModules();
+    public function getFeatures();
 
     /**
      * @param null $environment

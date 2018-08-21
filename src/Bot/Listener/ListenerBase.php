@@ -12,7 +12,7 @@ namespace Aigachu\Lavenza\Bot\Listener;
  * Class ListenerBase
  * @package Aigachu\Lavenza\Bot\Listener
  */
-class ListenerBase
+abstract class ListenerBase implements ListenerInterface
 {
 
 }

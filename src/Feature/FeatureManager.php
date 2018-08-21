@@ -16,7 +16,7 @@ use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
  * Manages the loading and packaging of modules and their commands.
  * @package Aigachu\Lavenza\Module
  */
-final class ModuleManager
+final class FeatureManager
 {
 
     use SingletonTrait;

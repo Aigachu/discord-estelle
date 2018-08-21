@@ -10,7 +10,7 @@ namespace Aigachu\Lavenza;
 
 use Aigachu\Lavenza\Bot\BotBunker;
 use Aigachu\Lavenza\Configuration\ConfigRepository;
-use Aigachu\Lavenza\Module\ModuleManager;
+use Aigachu\Lavenza\Module\FeatureManager;
 use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
 use Aigachu\Lavenza\Text\TextManager;
 use React\EventLoop\ExtEventLoop;
@@ -102,8 +102,8 @@ class Lavenza
      * Return the single instance of the Module Manager.
      * The Module Manager manages bot modules. Each module is a collection of commands and features.
      */
-    public static function moduleManager() {
-        return ModuleManager::Instance();
+    public static function featureManager() {
+        return FeatureManager::Instance();
     }
 
     /**
@@ -141,6 +141,4 @@ class Lavenza
     public static function config($scope = 'full'): array {
         return ConfigRepository::config($scope);
     }
-
-
 }

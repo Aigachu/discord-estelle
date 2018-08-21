@@ -15,7 +15,7 @@ use ReflectionClass;
  * Class ModuleBase
  * @package Aigachu\Lavenza\Module
  */
-abstract class ModuleBase implements ModuleInterface
+abstract class FeatureBase implements FeatureInterface
 {
     use SingletonTrait;
 

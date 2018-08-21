@@ -14,8 +14,7 @@ _Coming soon..._
 
 <br>
 
-# Example
-This is a fairly trivial example of using Yasmin. You should put all your listener code into try-catch blocks and handle exceptions accordingly.
+# Configuration
 
 ```yaml
 #

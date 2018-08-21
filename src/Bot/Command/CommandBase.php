@@ -35,13 +35,9 @@ abstract class CommandBase implements CommandInterface
     /**
      * @var String $allowedApps
      */
-    public $env = 'all';
+    public $env = 'universal';
 
-    /**
-     * @var CommandListenerInterface $listener
-     */
-    protected static $listener;
-
+    // Declare commands as singletons.
     use SingletonTrait;
 
     /**

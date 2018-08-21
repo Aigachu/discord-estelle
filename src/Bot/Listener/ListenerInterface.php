@@ -14,5 +14,9 @@ namespace Aigachu\Lavenza\Bot\Listener;
  */
 interface ListenerInterface
 {
+    // Function that sets up what the listener listens for.
+    public function listen($content);
 
+    // Function that sets up what the listener does if it hears what it wants to hear.
+    public function execute();
 }

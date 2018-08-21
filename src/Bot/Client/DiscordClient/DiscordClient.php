@@ -65,7 +65,7 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
         // Set the token to the client.
         $this->token = $this->config['token'];
 
-        // Listener for Ready event.
+        // Event manager for Ready event.
         $this->on('ready', function () {
 
             // Run Boot tasks
@@ -76,25 +76,32 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
 
         });
 
-        // Listener for Message event.
+        // Event manager for Message event.
         $this->on('message', function ($message) {
-            $content = $message->content;
-            if (strpos($content, $this->config['cprefix']) === 0) {
-                foreach ($this->bot->getCommands('all') as $command) {
-                    if (strpos($content, $command->key) === 0 + strlen($this->config['cprefix'])) {
-                        $command->execute($this, $message);
-                    }
-                }
+            $this->listenForCommand($message);
+            echo 'Received Message from '.$message->author->tag.' in '.($message->channel->type === 'text' ? 'channel #'.$message->channel->name : 'DM').' with '.$message->attachments->count().' attachment(s) and '.\count($message->embeds).' embed(s)'.PHP_EOL;
+        });
+    }
 
-                foreach ($this->bot->getCommands('discord') as $command) {
-                    if (strpos($content, $command->key) === 0 + strlen($this->config['cprefix'])) {
-                        $command->execute($this, $message);
-                    }
+    /**
+     * Listen for a command to run.
+     * @param $message
+     */
+    private function listenForCommand($message) {
+        // Check if the beginning of the message is the command prefix or the bot's tag.
+        if (strpos($message->content, $this->config['cprefix']) === 0) {
+            foreach ($this->bot->getCommands('universal') as $command) {
+                if (strpos($message->content, $command->key) === 0 + strlen($this->config['cprefix'])) {
+                    $command->execute($this, $message);
                 }
             }
 
-            echo 'Received Message from '.$message->author->tag.' in '.($message->channel->type === 'text' ? 'channel #'.$message->channel->name : 'DM').' with '.$message->attachments->count().' attachment(s) and '.\count($message->embeds).' embed(s)'.PHP_EOL;
-        });
+            foreach ($this->bot->getCommands('discord') as $command) {
+                if (strpos($message->content, $command->key) === 0 + strlen($this->config['cprefix'])) {
+                    $command->execute($this, $message);
+                }
+            }
+        }
     }
 
     /**
