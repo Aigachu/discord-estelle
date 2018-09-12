@@ -12,6 +12,7 @@ use Aigachu\Lavenza\Bot\BotInterface;
 use Aigachu\Lavenza\Lavenza;
 use CharlotteDunois\Yasmin\Client as YasminClient;
 use CharlotteDunois\Yasmin\HTTP\DiscordAPIException;
+use Aigachu\Lavenza\Bot\Command\CommandInterface;
 
 /**
  * Class LavenzaClient
@@ -21,10 +22,11 @@ use CharlotteDunois\Yasmin\HTTP\DiscordAPIException;
  */
 class DiscordClient extends YasminClient implements DiscordClientInterface
 {
+
     /**
      * @const string CLIENT_TYPE
      */
-    const CLIENT_TYPE = 'discord';
+    public const CLIENT_TYPE = 'discord';
 
     /**
      * @var BotInterface $bot
@@ -48,10 +50,13 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
 
     /**
      * LavenzaClient constructor.
+     *
      * @param BotInterface $bot
-     * @param array $options
+     * @param array        $options
+     *
+     * @throws \Exception
      */
-    function __construct(BotInterface $bot, array $options = array())
+    public function __construct(BotInterface $bot, array $options = [])
     {
         // Run Yasmin's Client Constructor
         parent::__construct($options, Lavenza::loop());
@@ -66,39 +71,59 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
         $this->token = $this->config['token'];
 
         // Event manager for Ready event.
-        $this->on('ready', function () {
+        $this->on(
+            'ready', function () {
 
             // Run Boot tasks
             $this->runBootTasks();
 
             // Console log to confirm ready state.
-            echo 'Logged in as '.$this->user->tag.' created on '.$this->user->createdAt->format('d.m.Y H:i:s').PHP_EOL;
+            echo 'Logged in as '.$this->user->tag.' created on '
+                .$this->user->createdAt->format('d.m.Y H:i:s').PHP_EOL;
 
-        });
+        }
+        );
 
         // Event manager for Message event.
-        $this->on('message', function ($message) {
+        $this->on(
+            'message', function ($message) {
             $this->listenForCommand($message);
-            echo 'Received Message from '.$message->author->tag.' in '.($message->channel->type === 'text' ? 'channel #'.$message->channel->name : 'DM').' with '.$message->attachments->count().' attachment(s) and '.\count($message->embeds).' embed(s)'.PHP_EOL;
-        });
+            echo 'Received Message from '.$message->author->tag.' in '
+                .($message->channel->type === 'text' ? 'channel #'
+                    .$message->channel->name : 'DM').' with '
+                .$message->attachments->count().' attachment(s) and '.\count(
+                    $message->embeds
+                ).' embed(s)'.PHP_EOL;
+        }
+        );
     }
 
     /**
      * Listen for a command to run.
+     *
      * @param $message
      */
-    private function listenForCommand($message) {
+    private function listenForCommand($message)
+    {
         // Check if the beginning of the message is the command prefix or the bot's tag.
         if (strpos($message->content, $this->config['cprefix']) === 0) {
             foreach ($this->bot->getCommands('universal') as $command) {
-                if (strpos($message->content, $command->key) === 0 + strlen($this->config['cprefix'])) {
-                    $command->execute($this, $message);
+                if (strpos($message->content, $command->key) === 0 + \strlen(
+                        $this->config['cprefix']
+                    )
+                ) {
+                    /** @var CommandInterface $command **/
+                    $command::execute($this, $message);
                 }
             }
 
             foreach ($this->bot->getCommands('discord') as $command) {
-                if (strpos($message->content, $command->key) === 0 + strlen($this->config['cprefix'])) {
-                    $command->execute($this, $message);
+                if (strpos($message->content, $command->key) === 0 + \strlen(
+                        $this->config['cprefix']
+                    )
+                ) {
+                    /** @var CommandInterface $command **/
+                    $command::execute($this, $message);
                 }
             }
         }
@@ -106,7 +131,9 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
 
     /**
      * Basic function to reply to a message that was heard.
+     *
      * @param $message
+     *
      * @return mixed|void
      */
     public function reply($message, $text)
@@ -116,9 +143,11 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
 
     /**
      * Login function
+     *
      * @TODO - Documentation
      */
-    public function authenticate() {
+    public function authenticate()
+    {
         try {
             // Runs Yasmin's default login function with the given token.
             parent::login($this->token);
@@ -129,7 +158,8 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
 
     /**
      * Introduction
-     * This is the message that will be sent to the bot's configured "Home" channel.
+     * This is the message that will be sent to the bot's configured "Home"
+     * channel.
      */
     public function intro()
     {
@@ -137,23 +167,29 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
     }
 
     /**
-     * Sets the activity if one is specified, if not, uses the default one set for the bot if present.
+     * Sets the activity if one is specified, if not, uses the default one set
+     * for the bot if present.
+     *
      * @param string $activity
+     *
      * @return mixed|void
      */
     public function activity($activity = '')
     {
-        if (empty($activity))
+        if (empty($activity)) {
             $activity = $this->config['activity'];
+        }
 
         $this->user->setActivity($activity);
     }
 
     /**
      * Ready function
+     *
      * @TODO - Documentation
      */
-    public function runBootTasks() {
+    public function runBootTasks()
+    {
         $this->activity();
     }
 }

@@ -11,18 +11,21 @@ namespace Aigachu\Lavenza\Model\Singleton;
 /**
  * Trait Singleton
  * When designing applications,
- * it often makes sense conceptually and architecturally to allow access to one and only one instance of a particular class.
- * The singleton pattern enables us to do this.
+ * it often makes sense conceptually and architecturally to allow access to one
+ * and only one instance of a particular class. The singleton pattern enables
+ * us to do this.
  *
- * We declare a trait that can be used in many of the classes in the application that should be Singletons.
- * Classes that should only be instanced once in the application should be Singletons.
+ * We declare a trait that can be used in many of the classes in the
+ * application that should be Singletons. Classes that should only be instanced
+ * once in the application should be Singletons.
  */
 trait SingletonTrait
 {
+
     /**
      * @var mixed $instance
      */
-    private static $instances = array();
+    private static $instances = [];
 
     /**
      * SingletonTrait constructor.
@@ -44,14 +47,16 @@ trait SingletonTrait
 
     /**
      * Call this function to return the Singleton.
+     *
      * @return self
      */
-    public static function Instance(): self
+    public static function Instance() : self
     {
-        $cls = get_called_class(); // late-static-bound class name
+        $cls = static::class; // late-static-bound class name
         if (!isset(self::$instances[$cls])) {
             self::$instances[$cls] = new static;
         }
+
         return self::$instances[$cls];
     }
 }

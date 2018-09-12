@@ -12,17 +12,21 @@ use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
 
 /**
  * Class TextConstants
+ *
  * @package Aigachu\Lavenza\Text
  */
 final class TextManager extends TextLibrary
 {
+
     /**
      * @param $constant
      * @param $placeholder_values
+     *
      * @return mixed
      */
-    public static function get($constant, $placeholder_values) {
-        $text = constant("self::$constant");
+    public static function get($constant, $placeholder_values)
+    {
+        $text = \constant("self::$constant");
 
         if (!empty($placeholder_values)) {
             self::assignPlaceholderValuesToText($text, $placeholder_values);
@@ -35,7 +39,9 @@ final class TextManager extends TextLibrary
      * @param $text
      * @param $placeholder_values
      */
-    public static function assignPlaceholderValuesToText(&$text, $placeholder_values) {
+    public static function assignPlaceholderValuesToText(
+        &$text, $placeholder_values
+    ) : void {
         foreach ($placeholder_values as $i => $placeholder_value) {
             $i++;
             $text = str_replace("@$i", $placeholder_value, $text);

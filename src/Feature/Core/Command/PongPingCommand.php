@@ -6,16 +6,18 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Module\Core\Command;
+namespace Aigachu\Lavenza\Feature\Core\Command;
 
 use Aigachu\Lavenza\Bot\Command\CommandBase;
 
 /**
  * Class PongPingCommand
+ *
  * @package Aigachu\Lavenza\Module\PingModule\Command
  */
 final class PongPingCommand extends CommandBase
 {
+
     /**
      * @var string $key
      */
@@ -28,7 +30,8 @@ final class PongPingCommand extends CommandBase
 
     /**
      * @param \Aigachu\Lavenza\Bot\Client\ClientInterface $client
-     * @param $message
+     * @param                                             $message
+     *
      * @return mixed|void
      */
     public static function execute($client, $message)

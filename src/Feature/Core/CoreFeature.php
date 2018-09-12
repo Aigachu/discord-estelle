@@ -6,13 +6,14 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Module\Core;
+namespace Aigachu\Lavenza\Feature\Core;
 
-use Aigachu\Lavenza\Module\FeatureBase;
+use Aigachu\Lavenza\Feature\FeatureBase;
 
 /**
- * Class PingPongModule
- * @package Aigachu\Lavenza\Module\PingPong
+ * Class CoreFeature
+ *
+ * @package Aigachu\Lavenza\Feature\Core
  */
 final class CoreFeature extends FeatureBase
 {

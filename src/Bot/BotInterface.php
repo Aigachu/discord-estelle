@@ -10,10 +10,12 @@ namespace Aigachu\Lavenza\Bot;
 
 /**
  * Interface BotInterface
+ *
  * @package Aigachu\Lavenza\Bot
  */
 interface BotInterface
 {
+
     /**
      * @return mixed
      */
@@ -26,6 +28,7 @@ interface BotInterface
 
     /**
      * @param null $environment
+     *
      * @return mixed
      */
     public function getCommands($environment = null);

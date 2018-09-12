@@ -6,13 +6,15 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Module;
+namespace Aigachu\Lavenza\Feature;
 
 /**
- * Interface ModuleInterface
+ * Interface FeatureInterface
+ *
  * @package Aigachu\Lavenza\Module
  */
 interface FeatureInterface
 {
 
+    // You better add some stuff in here you b...
 }

@@ -14,30 +14,37 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class ConfigRepository
+ *
  * @package Aigachu\Lavenza\Configuration
  */
 final class ConfigRepository
 {
+
     use SingletonTrait;
 
     /**
      * Omitted configuration files.
+     *
      * @var array
      */
-    protected static $omitted_configurations = [
-        'example'
-    ];
+    private static $omitted_configurations
+        = [
+            'example',
+        ];
 
     /**
      * Fetch configuration data for a given scope.
      * Fetches all configuration scopes if a scope isn't specified.
-     * A "Scope" here signifies a "category" for configuration. Each "Scope" is a separate directory housed in the 'config' folder
-     * found at the root of this project.
+     * A "Scope" here signifies a "category" for configuration. Each "Scope" is
+     * a separate directory housed in the 'config' folder found at the root of
+     * this project.
      *
      * @param String $scope
+     *
      * @return array
      */
-    public static function config($scope = 'full'): array {
+    public static function config($scope = 'full') : array
+    {
 
         // Initialize Cache with the configuration's scope.
         $cache = new ApcuCache();
@@ -47,14 +54,16 @@ final class ConfigRepository
         $configurations = $cache->fetch($cache_key);
 
         // If we find the configurations in the cache, fetch them and return them immediately.
-        if (!is_null($configurations) && $configurations !== false) {
+        if ($configurations !== null && $configurations !== false) {
             return $configurations;
         }
 
         // First we get an array containing all the directories we need to parse.
         // If a scope is set, we will only go into the needed directory, instead of fetching all of the directories.
         if ($scope !== 'full') {
-            $configurations = self::fetchConfigFromDirectory(CONFIG_PATH . $scope . '/');
+            $configurations = self::fetchConfigFromDirectory(
+                CONFIG_PATH.$scope.'/'
+            );
         } else {
             $configurations = self::fetchAllConfigurations();
         }
@@ -65,14 +74,16 @@ final class ConfigRepository
     }
 
     /**
-     * Fetches all of the configurations in the configuration folder of the project.
+     * Fetches all of the configurations in the configuration folder of the
+     * project.
      */
-    private static function fetchAllConfigurations() {
+    private static function fetchAllConfigurations() : array
+    {
         // Initialize array to hold the data.
         $configurations = [];
 
         // Fetch a list of directories from the configuration folder into an array.
-        $directories = array_filter(glob(CONFIG_PATH . '*'), 'is_dir');
+        $directories = array_filter(glob(CONFIG_PATH.'*'), 'is_dir');
 
         // Loop in each folder and get the configurations
         foreach ($directories as $directory) {
@@ -80,37 +91,46 @@ final class ConfigRepository
             // Add it to the $scope variable.
             $scope = str_replace(CONFIG_PATH, '', $directory);
 
-            $configurations[$scope] = self::fetchConfigFromDirectory($directory);
+            $configurations[$scope] = self::fetchConfigFromDirectory(
+                $directory
+            );
 
         }
-        
+
         return $configurations;
     }
 
     /**
      * Fetch all configurations from a single directory.
+     *
      * @param $directory
+     *
      * @return array
      */
-    private static function fetchConfigFromDirectory($directory): array {
+    private static function fetchConfigFromDirectory($directory) : array
+    {
 
         // Array to house all configurations.
         $configurations = [];
 
         // List all files in this directory.
-        $configuration_files = glob($directory . '*');
+        $configuration_files = glob($directory.'*');
 
         // Loop into the configuration file paths found and fetch configurations.
         foreach ($configuration_files as $file_path) {
             // Clean and get the configuration key, which is the name of the file without the .config.yml.
-            $config_key = str_replace($directory, '', $file_path);
-            $config_key = str_replace('.config.yml', '', $config_key);
+            $config_key = str_replace(
+                [$directory, '.config.yml'], '', $file_path
+            );
 
             // Omit any "example" config files.
-            if (in_array($config_key, self::$omitted_configurations))
+            if (\in_array($config_key, self::$omitted_configurations, false)) {
                 continue;
+            }
 
-            $configurations[$config_key] = Yaml::parse(file_get_contents($file_path));;
+            $configurations[$config_key] = Yaml::parse(
+                file_get_contents($file_path)
+            );
         }
 
         return $configurations;

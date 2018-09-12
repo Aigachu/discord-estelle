@@ -13,35 +13,41 @@ use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
 
 /**
  * Class BotBunker
+ *
  * @package Aigachu\Lavenza\Bot
  */
 final class BotBunker
 {
+
     /**
      * @var array $bots
      */
-    protected static $bots = [];
+    private static $bots = [];
 
     use SingletonTrait;
 
     /**
      * @return array
      */
-    public function getBots(): array
+    public function getBots() : array
     {
         return self::$bots;
     }
 
     /**
      * Lavenza constructor.
-     * @param array $ids Bot IDs that should be deployed. If empty, all bots are deployed.
+     *
+     * @param array $ids Bot IDs that should be deployed. If empty, all bots
+     *                   are deployed.
+     *
      * @return bool
      */
-    public static function deployBots($ids = [])
+    public static function deployBots(array $ids = []) : bool
     {
         // Check if the configuration for bots is empty.
         if (empty(Lavenza::config('bots'))) {
             Lavenza::io('NO_BOT_CONFIG_FOUND');
+
             return false;
         }
 
@@ -52,6 +58,7 @@ final class BotBunker
             // Unset development bot configuration
             unset($bots_to_summon['development']);
             self::instantiateBots($bots_to_summon);
+
             return true;
         }
 
@@ -65,11 +72,17 @@ final class BotBunker
 
     /**
      * Deploy a single bot.
+     *
+     * @param $id
+     *
+     * @return bool|null
      */
-    public static function deployBot($id) {
+    public static function deployBot($id) : ?bool
+    {
         // Check for the individual bot configuration.
         if (!isset(Lavenza::config('bots')[$id])) {
             Lavenza::io('NO_BOT_CONFIG_FOUND_FOR_SINGLE_BOT', [$id]);
+
             return false;
         }
         // Set bot to be summoned.
@@ -81,7 +94,8 @@ final class BotBunker
     /**
      * @param $bot_config_array
      */
-    private static function instantiateBots($bot_config_array) {
+    private static function instantiateBots($bot_config_array) : void
+    {
         // Instantiate and authenticate all of the bots and their clients.
         foreach ($bot_config_array as $bot_id => $bot_config) {
 

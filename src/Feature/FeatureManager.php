@@ -6,15 +6,16 @@
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
  */
 
-namespace Aigachu\Lavenza\Module;
+namespace Aigachu\Lavenza\Feature;
 
 use Aigachu\Lavenza\Lavenza;
 use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
 
 /**
- * Class ModuleManager
+ * Class FeatureManager
  * Manages the loading and packaging of modules and their commands.
- * @package Aigachu\Lavenza\Module
+ *
+ * @package Aigachu\Lavenza\Feature
  */
 final class FeatureManager
 {
@@ -24,48 +25,56 @@ final class FeatureManager
     /**
      * @var array $modules
      */
-    protected static $modules;
+    private static $features;
 
     /**
      * @param $name
+     *
      * @return mixed
      */
-    public function load($name) {
-        if (!isset(self::$modules[$name])) {
-            Lavenza::io('FAILED_MODULE_LOAD', [$name]);
+    public function load($name)
+    {
+        if (!isset(self::$features[$name])) {
+            Lavenza::io('FAILED_FEATURE_LOAD', [$name]);
+
             return null;
         }
-        return self::$modules[$name];
+
+        return self::$features[$name];
     }
 
     /**
      * ModuleManager constructor.
      */
-    protected function __construct()
+    private function __construct()
     {
-        self::loadModules();
+        $this->loadFeatures();
     }
 
     /**
      * @return array
      */
-    public static function getModules(): array
+    public static function getFeatures() : array
     {
-        return self::$modules;
+        return self::$features;
     }
 
     /**
-     * For each module folder found in this folder, we load the module's class into the Manager.
+     * For each feature folder found in this folder, we load the features's
+     * main class into the Manager.
      */
-    private function loadModules() {
-        $moduleFolders = array_filter(glob(__DIR__ . '/*'), 'is_dir');
+    private function loadFeatures() : void
+    {
+        $featureFolders = array_filter(glob(__DIR__.'/*'), 'is_dir');
 
-        foreach ($moduleFolders as $folder_path) {
-            $module_name = str_replace(__DIR__ . '/', '', $folder_path);
-            $class_name = $module_name . 'Module';
-            $class = '\\' . __NAMESPACE__ . '\\' . $module_name . '\\' . $class_name;
-            $module = $class::Instance();
-            self::$modules[$module_name] = $module;
+        foreach ($featureFolders as $folder_path) {
+            $feature_name = str_replace(__DIR__.'/', '', $folder_path);
+            $class_name = $feature_name.'Feature';
+
+            /** @var SingletonTrait $class */
+            $class = '\\'.__NAMESPACE__.'\\'.$feature_name.'\\'.$class_name;
+            $feature = $class::Instance();
+            self::$features[$feature_name] = $feature;
         }
     }
 }

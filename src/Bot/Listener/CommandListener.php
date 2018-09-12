@@ -12,6 +12,7 @@ use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
 
 /**
  * Class CommandListener
+ *
  * @package Aigachu\Lavenza\Bot\Listener\CommandListener
  */
 final class CommandListener extends ListenerBase
@@ -25,6 +26,7 @@ final class CommandListener extends ListenerBase
 
     /**
      * CommandListener constructor.
+     *
      * @param $bot
      * @param $client
      */
@@ -37,7 +39,7 @@ final class CommandListener extends ListenerBase
     /**
      * @inheritdoc
      */
-    public function listen($content)
+    public function listen($content) : void
     {
 
     }
@@ -45,7 +47,7 @@ final class CommandListener extends ListenerBase
     /**
      * @inheritdoc
      */
-    public function execute()
+    public function execute() : void
     {
         // TODO: Implement execute() method.
     }

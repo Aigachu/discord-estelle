@@ -12,13 +12,16 @@ use Aigachu\Lavenza\Bot\Client\ClientInterface;
 
 /**
  * Interface CommandInterface
+ *
  * @package Aigachu\Lavenza\Bot\Command
  */
 interface CommandInterface
 {
+
     /**
      * @param ClientInterface $client
-     * @param $message
+     * @param                 $message
+     *
      * @return mixed
      */
     public static function execute($client, $message);

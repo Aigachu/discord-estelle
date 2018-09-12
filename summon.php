@@ -7,20 +7,21 @@
  */
 
 // Require composer autoloader.
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
 // Set a constant for the ROOT of the project codebase.
-const ROOT_PATH = __DIR__ . "/";
+const ROOT_PATH = __DIR__.'/';
 
 // Set a constant for the root of the configuration path.
-const CONFIG_PATH = ROOT_PATH . "config/";
+const CONFIG_PATH = ROOT_PATH.'config/';
 
 /**
  * Include all files in the ./includes folder.
- * This allows for better organization of files that should automatically be included in the project.
+ * This allows for better organization of files that should automatically be
+ * included in the project.
  */
-foreach (glob(__DIR__ . "/includes/*.php") as $filename) {
-    $filename = str_replace(__DIR__ . '/', '', $filename);
+foreach (glob(__DIR__.'/includes/*.php') as $filename) {
+    $filename = str_replace(__DIR__.'/', '', $filename);
     include_once $filename;
 }
 
@@ -29,11 +30,14 @@ use Aigachu\Lavenza\Lavenza;
 
 /**
  * Script Options
+ *
  * @option NoValue --debug - Summon Mikuchu, the development bot.
  */
-$options = getopt('d', [
-  'debug',
-]);
+$options = getopt(
+    'd', [
+        'debug',
+    ]
+);
 
 // If the debug option is set, we only want to run the development bot.
 // Otherwise, run the specified bots below. If no bots are specified, run them all.

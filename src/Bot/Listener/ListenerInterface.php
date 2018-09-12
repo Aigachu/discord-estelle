@@ -10,10 +10,12 @@ namespace Aigachu\Lavenza\Bot\Listener;
 
 /**
  * Interface ListenerInterface
+ *
  * @package Aigachu\Lavenza\Bot\Listener
  */
 interface ListenerInterface
 {
+
     // Function that sets up what the listener listens for.
     public function listen($content);
 
