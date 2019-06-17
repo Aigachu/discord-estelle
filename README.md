@@ -1,4 +1,4 @@
-# Lavenza [![Build Status](https://scrutinizer-ci.com/g/Aigachu/Lavenza/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Aigachu/Lavenza/build-status/master)
+# Lavenza (No longer maintained...See Lavenza-II!) [![Build Status](https://scrutinizer-ci.com/g/Aigachu/Lavenza/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Aigachu/Lavenza/build-status/master)
 
 Lavenza is my personal PHP project for running a collection of bots and features for various applications. 
 
