@@ -1,6 +1,6 @@
 <?php
 /**
- * Lavenza
+ * Project Lavenza
  * Copyright 2017-2018 Aigachu, All Rights Reserved
  *
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
@@ -39,16 +39,6 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
     protected $config;
 
     /**
-     * @var String $token
-     */
-    public $token;
-
-    /**
-     * @var array $listeners
-     */
-    protected $listeners;
-
-    /**
      * LavenzaClient constructor.
      *
      * @param BotInterface $bot
@@ -71,30 +61,20 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
         $this->token = $this->config['token'];
 
         // Event manager for Ready event.
-        $this->on(
-            'ready', function () {
-
+        $this->on('ready', function () {
             // Run Boot tasks
             $this->runBootTasks();
 
             // Console log to confirm ready state.
-            echo 'Logged in as '.$this->user->tag.' created on '
-                .$this->user->createdAt->format('d.m.Y H:i:s').PHP_EOL;
+            echo 'Logged in as '.$this->user->tag.' created on ' .$this->user->createdAt->format('d.m.Y H:i:s').PHP_EOL;
 
-        }
+          }
         );
 
         // Event manager for Message event.
-        $this->on(
-            'message', function ($message) {
+        $this->on('message', function ($message) {
             $this->listenForCommand($message);
-            echo 'Received Message from '.$message->author->tag.' in '
-                .($message->channel->type === 'text' ? 'channel #'
-                    .$message->channel->name : 'DM').' with '
-                .$message->attachments->count().' attachment(s) and '.\count(
-                    $message->embeds
-                ).' embed(s)'.PHP_EOL;
-        }
+          }
         );
     }
 
@@ -107,24 +87,24 @@ class DiscordClient extends YasminClient implements DiscordClientInterface
     {
         // Check if the beginning of the message is the command prefix or the bot's tag.
         if (strpos($message->content, $this->config['cprefix']) === 0) {
-            foreach ($this->bot->getCommands('universal') as $command) {
-                if (strpos($message->content, $command->key) === 0 + \strlen(
-                        $this->config['cprefix']
-                    )
-                ) {
-                    /** @var CommandInterface $command **/
-                    $command::execute($this, $message);
-                }
+          $commands = $this->bot->getCommands();
+          var_dump($commands);
+          foreach ($this->bot->getCommands('universal') as $command) {
+            echo $message->content;
+            echo $command->key;
+            if (strpos($message->content, $command->key) === 0 + \strlen($this->config['cprefix'])) {
+              echo "we're in...";
+              /** @var CommandInterface $command **/
+              $command::execute($this, $message);
             }
+          }
 
             foreach ($this->bot->getCommands('discord') as $command) {
-                if (strpos($message->content, $command->key) === 0 + \strlen(
-                        $this->config['cprefix']
-                    )
-                ) {
-                    /** @var CommandInterface $command **/
-                    $command::execute($this, $message);
-                }
+              if (strpos($message->content, $command->key) === 0 + \strlen($this->config['cprefix'])) {
+                echo "we're in...";
+                /** @var CommandInterface $command **/
+                $command::execute($this, $message);
+              }
             }
         }
     }

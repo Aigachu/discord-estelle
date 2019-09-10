@@ -1,6 +1,6 @@
 <?php
 /**
- * Lavenza
+ * Project Lavenza
  * Copyright 2017-2018 Aigachu, All Rights Reserved
  *
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
@@ -9,7 +9,8 @@
 namespace Aigachu\Lavenza\Model\Singleton;
 
 /**
- * Trait Singleton
+ * Provides a trait to describe classes as Singletons.
+ *
  * When designing applications,
  * it often makes sense conceptually and architecturally to allow access to one
  * and only one instance of a particular class. The singleton pattern enables

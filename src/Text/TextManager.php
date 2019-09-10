@@ -1,6 +1,6 @@
 <?php
 /**
- * Lavenza
+ * Project Lavenza
  * Copyright 2017-2018 Aigachu, All Rights Reserved
  *
  * License: https://github.com/Aigachu/Lavenza/blob/master/LICENSE
@@ -15,36 +15,35 @@ use Aigachu\Lavenza\Model\Singleton\SingletonTrait;
  *
  * @package Aigachu\Lavenza\Text
  */
-final class TextManager extends TextLibrary
-{
+final class TextManager extends TextLibrary {
 
-    /**
-     * @param $constant
-     * @param $placeholder_values
-     *
-     * @return mixed
-     */
-    public static function get($constant, $placeholder_values)
-    {
-        $text = \constant("self::$constant");
+  // Define this class as a Singleton.
+  use SingletonTrait;
 
-        if (!empty($placeholder_values)) {
-            self::assignPlaceholderValuesToText($text, $placeholder_values);
-        }
+  /**
+   * @param $constant
+   * @param $placeholder_values
+   *
+   * @return mixed
+   */
+  public static function get($constant, $placeholder_values) {
+    $text = \constant("self::$constant");
 
-        return $text;
+    if (!empty($placeholder_values)) {
+      self::assignPlaceholderValuesToText($text, $placeholder_values);
     }
 
-    /**
-     * @param $text
-     * @param $placeholder_values
-     */
-    public static function assignPlaceholderValuesToText(
-        &$text, $placeholder_values
-    ) : void {
-        foreach ($placeholder_values as $i => $placeholder_value) {
-            $i++;
-            $text = str_replace("@$i", $placeholder_value, $text);
-        }
+    return $text;
+  }
+
+  /**
+   * @param $text
+   * @param $placeholder_values
+   */
+  public static function assignPlaceholderValuesToText(&$text, $placeholder_values) : void {
+    foreach ($placeholder_values as $i => $placeholder_value) {
+      $i++;
+      $text = str_replace("@$i", $placeholder_value, $text);
     }
+  }
 }
